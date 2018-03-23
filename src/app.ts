@@ -169,8 +169,12 @@ class SimpleGame {
     }
 
     pointerHandler() {
-        this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 80);
-        this.shotGroup.add(this.jet.shoot().shot);
+        this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 200);
+        this.shotCounter++;
+        if (this.shotCounter > 100000) {
+            this.shotGroup.add(this.jet.shoot().shot);
+            this.shotCounter = 0;
+        }
     }
 
     spaceHit() {

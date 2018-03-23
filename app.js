@@ -126,8 +126,12 @@ var SimpleGame = /** @class */ (function () {
         this.cursors = this.game.input.keyboard.createCursorKeys();
     };
     SimpleGame.prototype.pointerHandler = function () {
-        this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 80);
-        this.shotGroup.add(this.jet.shoot().shot);
+        this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 200);
+        this.shotCounter++;
+        if (this.shotCounter > 100000) {
+            this.shotGroup.add(this.jet.shoot().shot);
+            this.shotCounter = 0;
+        }
     };
     SimpleGame.prototype.spaceHit = function () {
         this.shotGroup.add(this.jet.shoot().shot);
