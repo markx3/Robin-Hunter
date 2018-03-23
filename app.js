@@ -72,14 +72,6 @@ var SimpleGame = /** @class */ (function () {
             this.jet.jet.body.velocity.x -= 20;
         if (this.cursors.right.isDown)
             this.jet.jet.body.velocity.x += 20;
-        if (this.game.input.activePointer.isDown && !this.game.input.activePointer.isMouse) {
-            this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 100);
-            this.shotCounter++;
-            if (this.shotCounter == 60000000) {
-                this.shotCounter = 0;
-                this.shotGroup.add(this.jet.shoot().shot);
-            }
-        }
         this.game.physics.arcade.overlap(this.shotGroup, this.robinGroup, function (obj1, obj2) {
             var emitter = null;
             emitter = _this.game.add.emitter(obj2.position.x, obj2.position.y, 5);
@@ -130,7 +122,12 @@ var SimpleGame = /** @class */ (function () {
         this.game.physics.arcade.gravity.x = 0;
         this.SPACE = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.SPACE.onDown.add(SimpleGame.prototype.spaceHit, this);
+        this.game.input.pointer1.addClickTrampoline("shoot", this.pointerHandler, this);
         this.cursors = this.game.input.keyboard.createCursorKeys();
+    };
+    SimpleGame.prototype.pointerHandler = function () {
+        this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 80);
+        this.shotGroup.add(this.jet.shoot().shot);
     };
     SimpleGame.prototype.spaceHit = function () {
         this.shotGroup.add(this.jet.shoot().shot);

@@ -67,6 +67,7 @@ class SimpleGame {
     background: Phaser.Sprite;
     cursors: Phaser.CursorKeys;
     SPACE: Phaser.Key;
+    FINGER: Phaser.Pointer;
     shotGroup: Phaser.Group;
     robinGroup: Phaser.Group;
     emitter: Phaser.Particles.Arcade.Emitter;
@@ -103,14 +104,6 @@ class SimpleGame {
         if (this.cursors.right.isDown)
             this.jet.jet.body.velocity.x += 20;
 
-        if (this.game.input.activePointer.isDown && !this.game.input.activePointer.isMouse) {
-            this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 100);
-            this.shotCounter++;
-            if (this.shotCounter == 60000000) {
-                this.shotCounter = 0;
-                this.shotGroup.add(this.jet.shoot().shot)
-            }
-        }
         this.game.physics.arcade.overlap(this.shotGroup, this.robinGroup, (obj1: Phaser.Sprite, obj2: Phaser.Sprite) => {
             let emitter = null;
             emitter = this.game.add.emitter(obj2.position.x, obj2.position.y, 5);
@@ -170,8 +163,14 @@ class SimpleGame {
 
         this.SPACE = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.SPACE.onDown.add(SimpleGame.prototype.spaceHit, this);
+        this.game.input.pointer1.addClickTrampoline("shoot", this.pointerHandler, this);
         this.cursors = this.game.input.keyboard.createCursorKeys();
 
+    }
+
+    pointerHandler() {
+        this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 80);
+        this.shotGroup.add(this.jet.shoot().shot);
     }
 
     spaceHit() {
