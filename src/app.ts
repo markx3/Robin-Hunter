@@ -72,6 +72,7 @@ class SimpleGame {
     emitter: Phaser.Particles.Arcade.Emitter;
     scoreText: Phaser.Text;
     score: number;
+    shotCounter: number;
 
     constructor() {
         this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'content',
@@ -103,8 +104,12 @@ class SimpleGame {
             this.jet.jet.body.velocity.x += 20;
 
         if (this.game.input.activePointer.isDown && !this.game.input.activePointer.isMouse) {
-            this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y);
-            this.jet.shoot();
+            this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 100);
+            this.shotCounter++;
+            if (this.shotCounter == 60) {
+                this.shotCounter = 0;
+                this.shotGroup.add(this.jet.shoot().shot)
+            }
         }
         this.game.physics.arcade.overlap(this.shotGroup, this.robinGroup, (obj1: Phaser.Sprite, obj2: Phaser.Sprite) => {
             let emitter = null;
@@ -153,6 +158,7 @@ class SimpleGame {
         this.robinGroup = this.game.add.group();
         this.shotGroup = this.game.add.group();
         this.score = 0;
+        this.shotCounter = 0;
 
         this.scoreText = this.game.add.text(0, 0, "Score: ".concat(this.score.toString()), {
             font: "30px Arial", fill: "#ff0000", align: "center"
