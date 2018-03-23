@@ -73,8 +73,12 @@ var SimpleGame = /** @class */ (function () {
         if (this.cursors.right.isDown)
             this.jet.jet.body.velocity.x += 20;
         if (this.game.input.activePointer.isDown && !this.game.input.activePointer.isMouse) {
-            this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y);
-            this.jet.shoot();
+            this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 100);
+            this.shotCounter++;
+            if (this.shotCounter == 60) {
+                this.shotCounter = 0;
+                this.shotGroup.add(this.jet.shoot().shot);
+            }
         }
         this.game.physics.arcade.overlap(this.shotGroup, this.robinGroup, function (obj1, obj2) {
             var emitter = null;
@@ -118,6 +122,7 @@ var SimpleGame = /** @class */ (function () {
         this.robinGroup = this.game.add.group();
         this.shotGroup = this.game.add.group();
         this.score = 0;
+        this.shotCounter = 0;
         this.scoreText = this.game.add.text(0, 0, "Score: ".concat(this.score.toString()), {
             font: "30px Arial", fill: "#ff0000", align: "center"
         });
