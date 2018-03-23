@@ -64,6 +64,7 @@ var SimpleGame = /** @class */ (function () {
         var rnd = Math.floor(Math.random() * 100) + 1;
         if (rnd < 3)
             this.robinGroup.add(new Robin(this.game).bird);
+        this.game.input.pointer1.reset();
         if (this.cursors.down.isDown)
             this.jet.jet.body.velocity.y += 20;
         if (this.cursors.up.isDown)
@@ -128,10 +129,6 @@ var SimpleGame = /** @class */ (function () {
     SimpleGame.prototype.pointerHandler = function () {
         this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 200);
         this.shotCounter++;
-        if (this.shotCounter > 100000) {
-            this.shotGroup.add(this.jet.shoot().shot);
-            this.shotCounter = 0;
-        }
     };
     SimpleGame.prototype.spaceHit = function () {
         this.shotGroup.add(this.jet.shoot().shot);

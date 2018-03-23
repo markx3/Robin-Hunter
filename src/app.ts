@@ -95,6 +95,8 @@ class SimpleGame {
         if (rnd < 3)
             this.robinGroup.add(new Robin(this.game).bird);
 
+        this.game.input.pointer1.reset();
+
         if (this.cursors.down.isDown)
             this.jet.jet.body.velocity.y += 20;
         if (this.cursors.up.isDown)
@@ -164,6 +166,7 @@ class SimpleGame {
         this.SPACE = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.SPACE.onDown.add(SimpleGame.prototype.spaceHit, this);
         this.game.input.pointer1.addClickTrampoline("shoot", this.pointerHandler, this);
+
         this.cursors = this.game.input.keyboard.createCursorKeys();
 
     }
@@ -171,10 +174,7 @@ class SimpleGame {
     pointerHandler() {
         this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 200);
         this.shotCounter++;
-        if (this.shotCounter > 100000) {
-            this.shotGroup.add(this.jet.shoot().shot);
-            this.shotCounter = 0;
-        }
+
     }
 
     spaceHit() {
