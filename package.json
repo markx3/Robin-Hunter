@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --watch --content-base . -d --progress",
     "build": "tsc",
-    "start": "./node_modules/webpack/bin/webpack.js -p --progress && node server.js"
+    "start": "http-server /build"
   },
   "repository": {
     "type": "git",
@@ -16,21 +16,10 @@
   "license": "MIT",
   "homepage": "https://github.com/wlk/phaser-typescript-boilerplate",
   "devDependencies": {
-    "webpack": "^1.14.0",
+    "webpack": "^1.15.0",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "http-server": "^0.11.1",
-    "babel-core": "^6.21.0",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.18.0",
-    "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.26.1",
-    "express": "^4.14.0",
-    "less": "^2.7.2",
-    "less-loader": "^2.2.3",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.14.0"
+    "http-server": "^0.11.1"
   }
 }
