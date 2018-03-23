@@ -64,6 +64,7 @@ class SimpleGame {
     game: Phaser.Game;
     jet: Jet;
     bird: Phaser.Sprite;
+    background: Phaser.Sprite;
     cursors: Phaser.CursorKeys;
     SPACE: Phaser.Key;
     shotGroup: Phaser.Group;
@@ -79,6 +80,7 @@ class SimpleGame {
 
 
     preload() {
+        this.game.load.image("background", "images/sky.png")
         this.game.load.image("jet", "images/plane.png");
         this.game.load.image("particle1", "images/particle1.png");
         this.game.load.image("particle2", "images/particle2.png");
@@ -141,13 +143,14 @@ class SimpleGame {
 
 
     create() {
+        this.background = this.game.add.sprite(0, 0, "background");
         this.jet = new Jet(this.game);
         this.robinGroup = this.game.add.group();
         this.shotGroup = this.game.add.group();
         this.score = 0;
 
         this.scoreText = this.game.add.text(0, 0, "Score: ".concat(this.score.toString()), {
-            font: "65px Arial", fill: "#ff0000", align: "center"
+            font: "30px Arial", fill: "#ff0000", align: "center"
         });
 
 
