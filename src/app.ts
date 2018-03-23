@@ -106,7 +106,7 @@ class SimpleGame {
         if (this.game.input.activePointer.isDown && !this.game.input.activePointer.isMouse) {
             this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 100);
             this.shotCounter++;
-            if (this.shotCounter == 60) {
+            if (this.shotCounter == 6000) {
                 this.shotCounter = 0;
                 this.shotGroup.add(this.jet.shoot().shot)
             }
