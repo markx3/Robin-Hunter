@@ -163,8 +163,10 @@ class SimpleGame {
         this.game.physics.arcade.gravity.y = 0;
         this.game.physics.arcade.gravity.x = 0;
 
-        this.SPACE = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        this.SPACE.onDown.add(SimpleGame.prototype.spaceHit, this);
+        if (!this.game.input.pointer1.isMouse) {
+            this.SPACE = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            this.SPACE.onDown.add(SimpleGame.prototype.spaceHit, this);
+        }
         this.game.input.pointer1.addClickTrampoline("shoot", this.pointerHandler, this);
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -174,11 +176,14 @@ class SimpleGame {
     pointerHandler() {
         this.jet.jet.position.set(this.game.input.pointer1.x, this.game.input.pointer1.y - 200);
         this.shotCounter++;
+        if (this.shotCounter > 10000) {
+            this.shotGroup.add(this.jet.shoot().shot);
+        }
 
     }
 
     spaceHit() {
-        this.shotGroup.add(this.jet.shoot().shot)
+        this.shotGroup.add(this.jet.shoot().shot);
     }
 }
 
